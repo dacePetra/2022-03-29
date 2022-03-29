@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+<br>
+{% block back %}
+<ul class="nav nav-pills">
+</ul>
+{% endblock %}
+<br><br>
+<h2>Add product</h2>
+<form method="post" action="/products">
+    <div>
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name" required/>
+    </div>
+    <br>
+    <div>
+        <label for="description">Description:</label><br>
+        <input type="text" id="description" name="description" required/>
+    </div>
+    <br>
+    <div>
+        <label for="price">Price:</label><br>
+        <input type="text" id="price" name ="price" required/>
+    </div>
+    <br>
+    <div>
+        <label for="available_amount">Available amount:</label><br>
+        <input type="text" id="available_amount" name="available_amount" required/>
+    </div>
+    <br>
+    <div>
+        <button type="submit" class="btn btn-outline-dark" name="submit">Save product</button>
+    </div>
+</form>
+
+{% endblock %}

@@ -11,6 +11,7 @@
     "twig/twig": "^3.3",
     "nesbot/carbon": "^2.57",
     "twbs/bootstrap": "^5.1",
-    "phpunit/phpunit": "^9.5"
+    "phpunit/phpunit": "^9.5",
+    "php-di/php-di": "^6.3"
   }
 }

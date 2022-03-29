@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<br>
+{% block back %}
+{% endblock %}
+<br>
+<table class="table">
+    <thead class="thead-dark">
+    <tr>
+        <th scope="col">Product</th>
+        <th scope="col">Price</th>
+        <th scope="col">Amount</th>
+        <th scope="col">Total</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <th scope="row">{{ product.name }}</th>
+        <td>{{ product.price }}</td>
+        <td>{{ amount }}</td>
+        <td>{{ total }}</td>
+    </tr>
+    </tbody>
+</table>
+<form method="post" action="/products/{{ product.id }}/buy/confirmed">
+    <input type="hidden" id="amount" name="amount" value="{{ amount }}">
+    <input type="hidden" id="productId" name="productId" value="{{ product.id }}">
+    <div>
+        <button type="submit" class="btn btn-outline-dark" name="submit">Confirm</button>
+    </div>
+</form>
+{% endblock %}

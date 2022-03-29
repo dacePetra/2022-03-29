@@ -1,51 +1,43 @@
 <?php
 session_start();
 
+use App\Controllers\ProductsController;
 use App\Controllers\WelcomeController;
 use App\Redirect;
+use App\Repositories\Product\CsvProductRepository;
+use App\Repositories\Product\MySqlProductRepository;
+use App\Repositories\Product\ProductRepository;
+use App\Services\Product\Store\StoreProductService;
 use App\Views\View;
+use Psr\Container\ContainerInterface;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
 require_once 'vendor/autoload.php';
 
+//$builder = new DI\ContainerBuilder();
+//$builder->addDefinitions([
+//    StoreProductService::class => function (ContainerInterface $container) {
+//    return new StoreProductService($container->get(CsvProductRepository::class));
+//    },
+//    ProductRepository::class => DI\create(MySqlProductRepository::class)
+//]);
+//$container = $builder->build();
+
+
 $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) {
 
     $r->addRoute('GET', '/', [WelcomeController::class, 'opening']);
-//    $r->addRoute('GET', '/welcome', [WelcomeController::class, 'welcome']);
-//
-//    $r->addRoute('GET', '/users/signup', [UsersController::class, 'signup']);
-//    $r->addRoute('POST', '/users', [UsersController::class, 'register']);
-//
-//    $r->addRoute('GET', '/users/login', [UsersController::class, 'login']);
-//    $r->addRoute('POST', '/users/login', [UsersController::class, 'enter']);
-//
-//    $r->addRoute('GET', '/users/logout', [UsersController::class, 'logout']);
-//
-//    $r->addRoute('GET', '/users', [UsersController::class, 'index']);
-//    $r->addRoute('GET', '/users/{id:\d+}', [UsersController::class, 'show']);
-//
-//    $r->addRoute('GET', '/users/{id:\d+}/reservations', [UsersController::class, 'reservations']);
-//    $r->addRoute('GET', '/users/{id:\d+}/apartments', [UsersController::class, 'apartments']);
-//
-//    $r->addRoute('GET', '/apartments', [ApartmentsController::class, 'index']);
-//    $r->addRoute('GET', '/apartments/{id:\d+}', [ApartmentsController::class, 'show']);
-//
-//    $r->addRoute('GET', '/apartments/create', [ApartmentsController::class, 'create']);
-//    $r->addRoute('POST', '/apartments', [ApartmentsController::class, 'store']);
-//
-//    $r->addRoute('POST', '/apartments/{id:\d+}/delete', [ApartmentsController::class, 'delete']);
-//
-//    $r->addRoute('GET', '/apartments/{id:\d+}/edit', [ApartmentsController::class, 'edit']);
-//    $r->addRoute('POST', '/apartments/{id:\d+}', [ApartmentsController::class, 'update']);
-//
-//    $r->addRoute('POST', '/apartments/{id:\d+}/review', [ApartmentReviewsController::class, 'review']);
-//    $r->addRoute('POST', '/apartments/{nr:\d+}/erase/{id:\d+}', [ApartmentReviewsController::class, 'erase']);
-//
-//    $r->addRoute('GET', '/apartments/{id:\d+}/reserve', [ApartmentReservationsController::class, 'reserve']);
-//    $r->addRoute('POST', '/apartments/{id:\d+}/confirm', [ApartmentReservationsController::class, 'confirm']);
-//
-//    $r->addRoute('GET', '/reservations/{id:\d+}/show', [ApartmentReservationsController::class, 'show']);
+
+    $r->addRoute('GET', '/products', [ProductsController::class, 'index']);
+    $r->addRoute('GET', '/products/{id:\d+}', [ProductsController::class, 'show']);
+
+    $r->addRoute('GET', '/products/add', [ProductsController::class, 'add']);
+    $r->addRoute('POST', '/products', [ProductsController::class, 'store']);
+
+    $r->addRoute('POST', '/products/{id:\d+}/buy', [ProductsController::class, 'buy']);
+    $r->addRoute('POST', '/products/{id:\d+}/buy/confirmed', [ProductsController::class, 'confirmed']);
+    //products/{{ product.id }}/buy/confirm
 //    $r->addRoute('POST', '/reservations/{id:\d+}/delete', [ApartmentReservationsController::class, 'delete']);
 
 });

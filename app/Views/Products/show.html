@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<br>
+{% block back %}
+{% endblock %}
+<br>
+<div class="flex-container">
+    <div class="card-deck one">
+        <div class="card text-white bg-dark mb-3">
+            <div class="card-body">
+                <h3 class="card-title">{{ product.name }}</h3>
+                <p class="card-text">
+                <h6>Description:</h6>
+                {{ product.description }}
+                </p>
+                <p class="card-text">
+                <h6>Price:</h6>
+                {{ product.price }} EUR
+                </p>
+                <p class="card-text">
+                <h6>Available amount:</h6>
+                {{ product.availableAmount }}
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% if amountNotAvailable != "" %}
+<small style="color:red;">{{ amountNotAvailable }}</small><br>
+{% endif %}
+<form method="post" action="/products/{{ product.id }}/buy">
+    <div>
+        <label for="amount">Amount:</label><br>
+        <input type="text" id="amount" name="amount" required/>
+    </div>
+    <br>
+    <div>
+        <button type="submit" class="btn btn-outline-dark" name="submit">Buy</button>
+    </div>
+</form>
+{% endblock %}
