@@ -1,0 +1,90 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+body {
+    margin-left: 100px;
+    margin-right: 100px;
+}
+ul {
+    list-style-type: none;
+}
+li {
+    margin-left: 12px;
+}
+.nomargin{
+    margin-left: 0px;
+}
+.menu {
+    font-size: x-large;
+    color: #070760;
+}
+.nav-pills .nav-link.active {
+    background-color: #212529;
+}
+.nav-pills .nav-link.white {
+    background-color: #6c757d;
+    color: white;
+}
+.flex-container {
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 50px;
+    justify-content: space-between;
+}
+.card-deck {
+    flex-basis: 30%;
+}
+.card-deck.one {
+    flex-basis: 100%;
+}
+.card {
+}
+#white {
+    color: white;
+    font-size: x-large;
+}
+
+.rate {
+    float: left;
+    height: 46px;
+    padding: 0 10px;
+    margin: 0;
+
+}
+.rate:not(:checked) > input {
+    position:absolute;
+    top:-9999px;
+    margin: 0;
+    padding: 0;
+}
+.rate:not(:checked) > label {
+    float:right;
+    width:1em;
+    overflow:hidden;
+    white-space:nowrap;
+    cursor:pointer;
+    font-size:30px;
+    color:#ccc;
+    margin: 0;
+    padding: 0;
+}
+.rate:not(:checked) > label:before {
+    content: '★ ';
+    margin: 0;
+    padding: 0;
+}
+.rate > input:checked ~ label {
+    color: #ffc700;
+    margin: 0;
+    padding: 0;
+}
+.rate:not(:checked) > label:hover,
+.rate:not(:checked) > label:hover ~ label {
+    color: #deb217;
+}
+.rate > input:checked + label:hover,
+.rate > input:checked + label:hover ~ label,
+.rate > input:checked ~ label:hover,
+.rate > input:checked ~ label:hover ~ label,
+.rate > label:hover ~ input:checked ~ label {
+    color: #c59b08;
+}
