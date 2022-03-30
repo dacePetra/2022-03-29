@@ -15,14 +15,14 @@ use Twig\Loader\FilesystemLoader;
 
 require_once 'vendor/autoload.php';
 
-//$builder = new DI\ContainerBuilder();
-//$builder->addDefinitions([
+$builder = new DI\ContainerBuilder();
+$builder->addDefinitions([
 //    StoreProductService::class => function (ContainerInterface $container) {
 //    return new StoreProductService($container->get(CsvProductRepository::class));
 //    },
-//    ProductRepository::class => DI\create(MySqlProductRepository::class)
-//]);
-//$container = $builder->build();
+    ProductRepository::class => DI\create(MySqlProductRepository::class)
+]);
+$container = $builder->build();
 
 
 $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) {
@@ -37,8 +37,6 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
 
     $r->addRoute('POST', '/products/{id:\d+}/buy', [ProductsController::class, 'buy']);
     $r->addRoute('POST', '/products/{id:\d+}/buy/confirmed', [ProductsController::class, 'confirmed']);
-    //products/{{ product.id }}/buy/confirm
-//    $r->addRoute('POST', '/reservations/{id:\d+}/delete', [ApartmentReservationsController::class, 'delete']);
 
 });
 
@@ -68,7 +66,8 @@ switch ($routeInfo[0]) {
         $vars = $routeInfo[2];
 
         /** @var View $response */ // because of this getPath and getVariables can be called
-        $response = (new $controller)->$method($vars);
+        $response = (new $controller($container))->$method($vars);
+//        $response = ($container->get($controller))->$method($vars);// ja nepadod visu container tālāk
 
         $loader = new FilesystemLoader('app/Views'); //filename path
         $twig = new Environment($loader);

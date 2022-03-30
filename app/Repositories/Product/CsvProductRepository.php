@@ -18,4 +18,19 @@ class CsvProductRepository implements ProductRepository
         return $products;
     }
 
+    public function getProductById(int $productId): Product
+    {
+        var_dump("save in CSV");die;
+    }
+
+    public function buy(int $productId, int $availableAmountAfterPurchase): void
+    {
+        var_dump("save in CSV");die;
+    }
+
+    public function getAvailableAmountById($productId): int
+    {
+        var_dump("save in CSV");die;
+    }
+
 }

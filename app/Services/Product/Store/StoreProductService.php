@@ -10,9 +10,9 @@ class StoreProductService
 {
     private ProductRepository $productRepository;
 
-    public function __construct()
+    public function __construct(ProductRepository $productRepository)
     {
-        $this->productRepository = new MySqlProductRepository();
+        $this->productRepository = $productRepository;
     }
 
     public function execute(StoreProductRequest $request): void

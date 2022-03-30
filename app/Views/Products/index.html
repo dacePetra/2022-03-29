@@ -6,6 +6,10 @@
 {% block back %}
 {% endblock %}
 <br>
+{% if purchaseConfirmed != "" %}
+<h3>{{ purchaseConfirmed }}</h3>
+{% endif %}
+<br>
 <div class="flex-container">
     {% for product in products %}
     <div class="card-deck">
@@ -14,6 +18,8 @@
                 <h5 class="card-title">{{ product.name }}</h5>
                 <p class="card-text">
                     Price: {{ product.price }} EUR
+                    <br>
+                    Available amount: {{ product.availableAmount }}
                 </p>
                 <p class="card-text">
                 <ul class="nav nav-pills">
