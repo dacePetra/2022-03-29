@@ -4,12 +4,9 @@ session_start();
 use App\Controllers\ProductsController;
 use App\Controllers\WelcomeController;
 use App\Redirect;
-use App\Repositories\Product\CsvProductRepository;
 use App\Repositories\Product\MySqlProductRepository;
 use App\Repositories\Product\ProductRepository;
-use App\Services\Product\Store\StoreProductService;
 use App\Views\View;
-use Psr\Container\ContainerInterface;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
@@ -36,15 +33,14 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
     $r->addRoute('POST', '/products', [ProductsController::class, 'store']);
 
     $r->addRoute('POST', '/products/{id:\d+}/buy', [ProductsController::class, 'buy']);
-    $r->addRoute('POST', '/products/{id:\d+}/buy/confirmed', [ProductsController::class, 'confirmed']);
+    $r->addRoute('POST', '/products/{id:\d+}/buy/confirm', [ProductsController::class, 'confirm']);
+    $r->addRoute('POST', '/products/{id:\d+}/buy/pay', [ProductsController::class, 'pay']);
 
 });
 
-// Fetch method and URI from somewhere
 $httpMethod = $_SERVER['REQUEST_METHOD'];
 $uri = $_SERVER['REQUEST_URI'];
 
-// Strip query string (?foo=bar) and decode URI
 if (false !== $pos = strpos($uri, '?')) {
     $uri = substr($uri, 0, $pos);
 }
@@ -65,11 +61,9 @@ switch ($routeInfo[0]) {
         $method = $handler[1];
         $vars = $routeInfo[2];
 
-        /** @var View $response */ // because of this getPath and getVariables can be called
-        $response = (new $controller($container))->$method($vars);
-//        $response = ($container->get($controller))->$method($vars);// ja nepadod visu container tālāk
+        $response = ($container->get($controller))->$method($vars);
 
-        $loader = new FilesystemLoader('app/Views'); //filename path
+        $loader = new FilesystemLoader('app/Views');
         $twig = new Environment($loader);
 
         if ($response instanceof View) {

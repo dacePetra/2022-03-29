@@ -2,9 +2,7 @@
 
 namespace App\Services\Product\Buy;
 
-use App\Models\Product;
 use App\Repositories\Product\ProductRepository;
-use App\Repositories\Product\MySqlProductRepository;
 
 class AvailableAmountProductService
 {

@@ -62,15 +62,6 @@ class MySqlProductRepository implements ProductRepository
         );
     }
 
-    public function buy(int $productId, int $availableAmountAfterPurchase): void
-    {
-        Database::connection()
-            ->update('products', [
-                'available_amount' => $availableAmountAfterPurchase,
-            ], ['id' => $productId]
-            );
-    }
-
     public function getAvailableAmountById($productId): int
     {
         $productQuery = Database::connection()
@@ -83,6 +74,25 @@ class MySqlProductRepository implements ProductRepository
             ->fetchAssociative();
 
         return (int) $productQuery["available_amount"];
+    }
+
+    public function buy(int $productId, int $productAmount): void
+    {
+        $productQuery = Database::connection()
+            ->createQueryBuilder()
+            ->select('available_amount')
+            ->from('products')
+            ->where('id = ?')
+            ->setParameter(0, $productId)
+            ->executeQuery()
+            ->fetchAssociative();
+
+        Database::connection()
+            ->update('products', [
+                'available_amount' => ((int)$productQuery["available_amount"]-$productAmount),
+            ], ['id' => $productId]
+            );
+
     }
 
 }
